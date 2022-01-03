@@ -42,22 +42,28 @@ app.use('/api/msg', message)
 io.on('connection', (socket) => {
 
      socket.on('online', async (data) => {
-          await authModel.updateOne({ _id: data.id }, {
-               $set: {
-                    isActive: true
-               }
-          })
-          socket.join(data.id)
-          socket.broadcast.emit('online')
-          socket.on("disconnect", async() => {
+          try{
                await authModel.updateOne({ _id: data.id }, {
                     $set: {
-                         isActive: false,
-                         lastSeen:Date.now() 
+                         isActive: true
                     }
                })
+               socket.join(data.id)
                socket.broadcast.emit('online')
-          })
+               socket.on("disconnect", async() => {
+                    await authModel.updateOne({ _id: data.id }, {
+                         $set: {
+                              isActive: false,
+                              lastSeen:Date.now() 
+                         }
+                    })
+                    socket.broadcast.emit('online')
+               })
+          }
+          catch(err){
+               console.log(err.message)
+          }
+         
      })
      socket.on('join', (data) => {
           socket.join(data.id)

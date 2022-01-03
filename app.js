@@ -11,6 +11,7 @@ const cors = require('cors');
 const http = require('http').createServer(app)
 const { authModel } = require('./models/auth.model');
 const { notify } = require('./router/auth.route');
+
 const io = require('socket.io')(http, {
      cors: {
           origin: '*'

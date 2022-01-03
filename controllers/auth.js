@@ -32,10 +32,8 @@ module.exports.login = async (req, res, next) => {
 module.exports.register = async (req, res, next) => {
     try {
         const userget = await authModel.find({phone:req.body.phone})
-        console.log(userget)
         if(userget.length!=0) return res.send(userget[0])
         const user = authModel(req.body)
-        
         return res.send(await user.save())
 
     }

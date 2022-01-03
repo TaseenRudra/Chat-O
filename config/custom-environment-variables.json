@@ -1,0 +1,6 @@
+{
+    "jwtSecrate":"jwt",
+    "db":"db",
+    "awsId":"awsid",
+    "awsKey":"awskey"
+}

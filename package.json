@@ -1,0 +1,25 @@
+{
+  "name": "trucky-backend",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "engine": "12.22.7",
+  "dependencies": {
+    "aws-sdk": "^2.1048.0",
+    "bcrypt": "^5.0.1",
+    "config": "^3.3.6",
+    "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.1.2",
+    "morgan": "~1.9.1",
+    "multer": "^1.4.4",
+    "multer-s3": "^2.10.0",
+    "nodemon": "^2.0.15",
+    "socket.io": "^4.4.0"
+  }
+}

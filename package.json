@@ -1,11 +1,11 @@
 {
-  "name": "trucky-backend",
+  "name": "backend",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "start": "node app.js"
   },
-  "engine": "12.22.7",
+  "engine": "12.22.8",
   "dependencies": {
     "aws-sdk": "^2.1048.0",
     "bcrypt": "^5.0.1",

@@ -70,7 +70,7 @@ io.on('connection', (socket) => {
 
 });
 
-http.listen(3000, '192.168.1.23', () => {
+http.listen(3000 || process.env.PORT, () => {
      console.log('listening on *:3000');
 });
 

@@ -11,11 +11,11 @@ const cors = require('cors');
 const http = require('http').createServer(app)
 const { authModel } = require('./models/auth.model');
 
-const io = require('socket.io')(http, {
-     cors: {
-          origin: '*'
-     }
-})
+// const io = require('socket.io')(http, {
+//      cors: {
+//           origin: '*'
+//      }
+// })
 
 
 //middleware
@@ -40,7 +40,7 @@ app.use('/api/msg', message)
 
 
 //Socket connection
-const io = require("socket.io")(httpServer, {
+const io = require("socket.io")(http, {
      cors: {
        origin: "https://rudramessage.herokuapp.com",
        methods: ["GET", "POST"]

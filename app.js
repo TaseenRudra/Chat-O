@@ -79,7 +79,7 @@ io.on('connection', (socket) => {
 
 });
 
-http.listen(process.env.PORT || 3000,'192.168.1.23', () => {
+http.listen(process.env.PORT || 3000, () => {
      console.log('listening on *:3000');
 });
 

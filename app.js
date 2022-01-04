@@ -40,7 +40,12 @@ app.use('/api/msg', message)
 
 
 //Socket connection
-
+const io = require("socket.io")(httpServer, {
+     cors: {
+       origin: "https://rudramessage.herokuapp.com",
+       methods: ["GET", "POST"]
+     }
+   });
 io.on('connection', (socket) => {
 
      socket.on('online', async (data) => {

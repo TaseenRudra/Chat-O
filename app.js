@@ -10,7 +10,6 @@ const errorHandler = require('./middlewares/errorHandler');
 const cors = require('cors');
 const http = require('http').createServer(app)
 const { authModel } = require('./models/auth.model');
-const { notify } = require('./router/auth.route');
 
 const io = require('socket.io')(http, {
      cors: {
@@ -39,45 +38,43 @@ app.use('/api/msg', message)
  * Listen on provided port, on all network interfaces.
  */
 
+
+//Socket connection
+
 io.on('connection', (socket) => {
 
      socket.on('online', async (data) => {
-          try{
+          await authModel.updateOne({ _id: data.id }, {
+               $set: {
+                    isActive: true
+               }
+          })
+          console.log(data.id+"online")
+          socket.broadcast.emit('online',"online")
+          socket.on("disconnect", async () => {
+               console.log("offline")
                await authModel.updateOne({ _id: data.id }, {
                     $set: {
-                         isActive: true
+                         isActive: false,
+                         lastSeen: Date.now()
                     }
                })
-               socket.join(data.id)
-               socket.broadcast.emit('online')
-               socket.on("disconnect", async() => {
-                    await authModel.updateOne({ _id: data.id }, {
-                         $set: {
-                              isActive: false,
-                              lastSeen:Date.now() 
-                         }
-                    })
-                    socket.broadcast.emit('online')
-               })
-          }
-          catch(err){
-               console.log(err.message)
-          }
-         
+               socket.broadcast.emit('offline',"offline")
+          })
      })
+
      socket.on('join', (data) => {
           socket.join(data.id)
-          socket.join(data.roomid);
+          console.log("join room "+data.id)
           socket.on('send', (data) => {
-               console.log("sender:"+data.senderid)
-               socket.broadcast.to(data.senderid).emit('notifyme',data.id)
-               socket.broadcast.to(data.roomid).emit('recieved', data)
+               socket.broadcast.to(data.senderid).emit('notifyme', data.id)
+               socket.broadcast.to(data.senderid).emit('recieved', data);
           })
      })
 
 });
 
-http.listen( process.env.PORT ||3000 , () => {
+http.listen(process.env.PORT || 3000,'192.168.1.23', () => {
      console.log('listening on *:3000');
 });
 
